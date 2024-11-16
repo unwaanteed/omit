@@ -1,23 +1,23 @@
 import { isArray, falsely, isObject, isString, isFunction } from "@unwanted/common";
 
-export const omit = (obj?: any, props?: any) => {
+export const omit = (obj?: any, options?: any) => {
   if (!isObject(obj)) {
     return {};
   }
 
   let isShouldOmit;
-  if (isFunction(props)) {
-    isShouldOmit = props;
-  } else if (isArray(props)) {
-    isShouldOmit = (name: string) => props.includes(name);
-  } else if (isString(props)) {
-    isShouldOmit = (val: string) => val === props;
-  } else if (props === true) {
+  if (isFunction(options)) {
+    isShouldOmit = options;
+  } else if (isArray(options)) {
+    isShouldOmit = (name: string) => options.includes(name);
+  } else if (isString(options)) {
+    isShouldOmit = (val: string) => val === options;
+  } else if (options === true) {
     return {};
-  } else if (!props) {
+  } else if (!options) {
     isShouldOmit = falsely;
   } else {
-    throw new Error("Unsupported type of 'props'");
+    throw new Error("Invalid options type");
   }
 
   const list = Object.keys(obj);
